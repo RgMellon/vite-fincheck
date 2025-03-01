@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "../../../app/services/authService";
 import toast from "react-hot-toast";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 const schema = z.object({
   password: z.string().nonempty("Senha obrigatória").min(8),
@@ -33,10 +34,12 @@ export function useLoginController() {
     },
   });
 
+  const { signIn } = useAuth();
+
   const handleSubmit = hookHandleSubmit(async (data) => {
     try {
       const response = await mutateAsync(data);
-      console.log(response.data.accesToken);
+      signIn(response.data.accesToken);
     } catch (err) {
       console.log(err);
       toast.error("Erro ao fazer login, tente mais tarde");

@@ -5,6 +5,7 @@ import { authService } from "../../../app/services/authService";
 import { SignUpParams } from "../../../app/services/authService/signUp";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 const schema = z.object({
   name: z.string().nonempty("Campo não pode ser vazio"),
@@ -39,9 +40,12 @@ export function useRegistrerController() {
     },
   });
 
+  const { signIn } = useAuth();
+
   const handleSubmit = hookHandleSubmit(async (data) => {
     try {
-      await mutateAsync(data);
+      const response = await mutateAsync(data);
+      signIn(response.accesToken);
     } catch (err) {
       console.log(err);
       toast.error("Ocorreu um erro");
