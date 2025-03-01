@@ -1,6 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { authService } from "../../../app/services/authService";
+import { SignUpParams } from "../../../app/services/authService/signUp";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   name: z.string().nonempty("Campo não pode ser vazio"),
@@ -29,13 +33,25 @@ export function useRegistrerController() {
     resolver: zodResolver(schema),
   });
 
-  const handleSubmit = hookHandleSubmit((data) => {
-    console.log("enviar dados para apo", data);
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async (data: SignUpParams) => {
+      return authService.signUp(data);
+    },
+  });
+
+  const handleSubmit = hookHandleSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+    } catch (err) {
+      console.log(err);
+      toast.error("Ocorreu um erro");
+    }
   });
 
   return {
     handleSubmit,
     register,
     errors,
+    isLoading,
   };
 }

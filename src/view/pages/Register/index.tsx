@@ -4,7 +4,8 @@ import { Button } from "../../components/Button";
 import { useRegistrerController } from "./useRegisterController";
 
 export function Register() {
-  const { register, errors, handleSubmit } = useRegistrerController();
+  const { register, errors, handleSubmit,   } =
+    useRegistrerController();
   return (
     <div className="mt-2">
       <header className="flex flex-col items-center gap-4">
