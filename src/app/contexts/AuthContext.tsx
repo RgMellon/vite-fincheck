@@ -1,5 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { localStorageKeys } from "../config/localStorageKeys";
+import { useQuery } from "@tanstack/react-query";
+import { userService } from "../services/userService";
+import { PageLoader } from "../../view/components/PageLoader";
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -15,14 +18,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!isSigedIn;
   });
 
+  const { error, isFetching, isSuccess, isError, remove } = useQuery({
+    queryKey: ["user", "me"],
+    queryFn: () => userService.me(),
+    enabled: signedIn,
+    staleTime: Infinity,
+  });
+
   function signIn(accessToken: string) {
     setSignedIn(true);
 
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
   }
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    remove();
+    setSignedIn(false);
+  }, [remove]);
+
+  useEffect(() => {
+    if (isError) {
+      signOut();
+    }
+  }, [error, isError, signOut]);
+
+  if (isFetching) {
+    return <PageLoader />;
+  }
+
   return (
-    <AuthContext.Provider value={{ signedIn, signIn }}>
+    <AuthContext.Provider value={{ signedIn: isSuccess && signedIn, signIn }}>
       {children}
     </AuthContext.Provider>
   );
