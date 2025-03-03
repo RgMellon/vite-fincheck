@@ -1,12 +1,14 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
-import { EyeIcon } from "../../../components/icons/EyeIcon";
+import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
 import "swiper/css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AccountSliderNavigation } from "./AccountSliderNavigation";
+import { useWindowWidth } from "../../../../../app/hooks/useWindowWidth";
 
 export function Accounts() {
+  const windowWidth = useWindowWidth();
+
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full md:p-10 px-8 py-8 flex flex-col ">
       <div>
@@ -25,7 +27,10 @@ export function Accounts() {
 
       <div className="flex-1 flex flex-col justify-end">
         <div>
-          <Swiper spaceBetween={16} slidesPerView={2.1}>
+          <Swiper
+            spaceBetween={16}
+            slidesPerView={windowWidth.width >= 500 ? 2.1 : 1.1}
+          >
             <div className="flex justify-between mb-4" slot="container-start">
               <strong className="text-white tracking-[-1px] text-lg ">
                 Minhas contas
@@ -34,7 +39,6 @@ export function Accounts() {
               <AccountSliderNavigation />
             </div>
 
-            {/* <div> */}
             <SwiperSlide>
               <AccountCard
                 name="Nubank"
@@ -61,7 +65,6 @@ export function Accounts() {
                 color="#7950f2"
               />
             </SwiperSlide>
-            {/* </div> */}
           </Swiper>
         </div>
       </div>
