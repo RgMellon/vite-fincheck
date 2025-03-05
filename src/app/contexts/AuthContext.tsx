@@ -7,6 +7,7 @@ import { PageLoader } from "../../view/components/PageLoader";
 interface AuthContextValue {
   signedIn: boolean;
   signIn(accessToken: string): void;
+  signOut(): void;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
@@ -48,7 +49,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ signedIn: isSuccess && signedIn, signIn }}>
+    <AuthContext.Provider
+      value={{ signedIn: isSuccess && signedIn, signIn, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
