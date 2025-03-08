@@ -13,7 +13,8 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 export function Accounts() {
   const windowWidth = useWindowWidth();
-  const { areValueVisibility, toggleValueVisibility } = useDashboard();
+  const { areValueVisibility, toggleValueVisibility, openNewAccountModal } =
+    useDashboard();
   const { isLoading, accounts } = useAccountController();
 
   return (
@@ -58,7 +59,10 @@ export function Accounts() {
                     Minhas contas
                   </strong>
 
-                  <button className="mt-4 text-white h-52 flex flex-col gap-4 items-center justify-center rounded-2xl border-2 border-dashed border-teal-600">
+                  <button
+                    className="mt-4 text-white h-52 flex flex-col gap-4 items-center justify-center rounded-2xl border-2 border-dashed border-teal-600"
+                    onClick={openNewAccountModal}
+                  >
                     <PlusCircledIcon className="h-6 w-6" />
 
                     <span className="tracking-[-0.5px] font-medium">
