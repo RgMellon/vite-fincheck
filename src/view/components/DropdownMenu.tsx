@@ -11,9 +11,15 @@ const DropdownMenuRoot = ({ children }: { children: React.ReactNode }) => {
   return <RdxDropdown.Root>{children}</RdxDropdown.Root>;
 };
 
-const DropdownMenuTrigger = ({ children }: { children: React.ReactNode }) => {
+const DropdownMenuTrigger = ({
+  children,
+  asChild,
+}: {
+  children: React.ReactNode;
+  asChild?: boolean;
+}) => {
   return (
-    <RdxDropdown.Trigger className="outline-none">
+    <RdxDropdown.Trigger className="outline-none w-full" asChild={asChild}>
       {children}
     </RdxDropdown.Trigger>
   );

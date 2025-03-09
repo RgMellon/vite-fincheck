@@ -6,23 +6,33 @@ import { BankAccountIcon } from "../../../../components/icons/BankAccountIcon";
 import { useDashboard } from "../../useDashboard";
 
 export function Fab() {
-  const { openNewAccountModal } = useDashboard();
+  const { openNewAccountModal, openNewTransactionModal } = useDashboard();
   return (
     <div className="fixed bottom-4 right-4">
       <Dropdown.Root>
-        <Dropdown.Trigger>
-          <button className="flex rounded-full justify-center  items-center bg-teal-900 w-12 h-12 text-white">
+        <Dropdown.Trigger asChild={false}>
+          <button className="flex outline-none rounded-full justify-center  items-center bg-teal-900 w-12 h-12 text-white">
             <PlusIcon className="w-6 h-6" />
           </button>
         </Dropdown.Trigger>
 
         <Dropdown.Content>
-          <Dropdown.Item className="gap-2">
+          <Dropdown.Item
+            className="gap-2"
+            onSelect={() => {
+              openNewTransactionModal("EXPENSE");
+            }}
+          >
             <Expense />
             Nova Despesa
           </Dropdown.Item>
 
-          <Dropdown.Item className="gap-2">
+          <Dropdown.Item
+            className="gap-2"
+            onSelect={() => {
+              openNewTransactionModal("INCOME");
+            }}
+          >
             <Income />
             Nova Receita
           </Dropdown.Item>
