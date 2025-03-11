@@ -5,28 +5,55 @@ import { Input } from "../../../../../components/Input";
 import { InputCurrency } from "../../../../../components/InputCurrency";
 import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
-import { useNewAccountModalController } from "./useNewAccountModalController";
+import { useEditAccountModalController } from "./useEditAccountModalController";
+import { TrashIcon } from "../../../../../components/icons/TrashIcon";
+import { ConfirmDeleteModal } from "../../../../../components/ConfirmDeleteModal";
 
-export function NewAccountModal() {
+export function EditAccountModal() {
   const {
-    closeNewAccountModal,
-    isNewAccountModalOpen,
+    closeEditModalBankAccount,
+    isEditModalBankAccountOpen,
     register,
     errors,
     handleSubmit,
     control,
+    isDeleteModalOpen,
+    handleDeleteModalClose,
     isLoading,
-  } = useNewAccountModalController();
+    handleOpenDeleteModal,
+    handleDeleteAccount,
+    isLoadingRemoveAccount,
+  } = useEditAccountModalController();
 
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmDeleteModal
+        isLoad={isLoadingRemoveAccount}
+        onConfirm={handleDeleteAccount}
+        subtitle="Tem certeza que deseja excluir?"
+        title="Deletar"
+        description="Ao excluir a conta, também sera excluido todos os registros de
+            receitas e despesas vinculados a ela"
+        onClose={handleDeleteModalClose}
+      />
+    );
+  }
   return (
     <Modal
-      open={isNewAccountModalOpen}
-      onclose={closeNewAccountModal}
-      title="Nova Conta"
+      open={isEditModalBankAccountOpen}
+      onclose={closeEditModalBankAccount}
+      title="Editar Conta"
+      rightAction={
+        <button onClick={handleOpenDeleteModal}>
+          <TrashIcon className="text-red-900 h-6 w-6" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div className="">
-          <span className="text-gray-600 tracking-[-0.5px] text-xs">Saldo</span>
+          <span className="text-gray-600 tracking-[-0.5px] text-xs">
+            Saldo inicial
+          </span>
           <div className="flex items-center gap-2">
             <span className="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
 
@@ -88,7 +115,7 @@ export function NewAccountModal() {
             />
 
             <Button className="mt-4" isLoading={isLoading}>
-              Cadastrar
+              Salvar
             </Button>
           </div>
         </div>

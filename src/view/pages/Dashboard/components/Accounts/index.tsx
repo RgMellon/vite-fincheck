@@ -10,12 +10,13 @@ import { cn } from "../../../../../app/utils/cn";
 import { useAccountController } from "./useAccountController";
 import { Spiner } from "../../../../components/Spiner";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 
 export function Accounts() {
   const windowWidth = useWindowWidth();
   const { areValueVisibility, toggleValueVisibility, openNewAccountModal } =
     useDashboard();
-  const { isLoading, accounts } = useAccountController();
+  const { isLoading, accounts, currentBalance } = useAccountController();
 
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full md:p-10 px-8 py-8 flex flex-col ">
@@ -39,7 +40,7 @@ export function Accounts() {
                   !areValueVisibility && "blur-sm"
                 )}
               >
-                R$ 1000,00
+                {formatCurrency(currentBalance)}
               </strong>
 
               <button
@@ -90,32 +91,11 @@ export function Accounts() {
                     <AccountSliderNavigation />
                   </div>
 
-                  <SwiperSlide>
-                    <AccountCard
-                      name="Nubank"
-                      type="CHECKING"
-                      balance={123.02}
-                      color="#7950f2"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      name="Nubank"
-                      type="CHECKING"
-                      balance={123.02}
-                      color="#7950f2"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      name="Nubank"
-                      type="CHECKING"
-                      balance={123.02}
-                      color="#7950f2"
-                    />
-                  </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide key={account.id}>
+                      <AccountCard data={account} />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}

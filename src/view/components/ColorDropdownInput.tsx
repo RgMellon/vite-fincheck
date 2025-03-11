@@ -73,7 +73,7 @@ export function ColorsDropdownInput({
           </button>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content className="grid grid-cols-4">
+        <DropdownMenu.Content className="grid grid-cols-4 z-99">
           {colors.map((color) => (
             <DropdownMenu.Item
               key={color.color}

@@ -15,7 +15,6 @@ export const AuthContext = createContext({} as AuthContextValue);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [signedIn, setSignedIn] = useState<boolean>(() => {
     const isSigedIn = localStorage.getItem(localStorageKeys.ACCESS_TOKEN);
-    console.log("executado");
     return !!isSigedIn;
   });
 

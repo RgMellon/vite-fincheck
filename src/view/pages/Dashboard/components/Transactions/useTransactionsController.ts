@@ -13,7 +13,7 @@ export function useTransactionsController() {
 
   return {
     isInitialLoading: false,
-    isLoading: true,
+    isLoading: false,
     transactions: [],
     isFilterModalOpen,
     handleOpenFilterModal,
