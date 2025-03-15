@@ -3,7 +3,7 @@ export interface Transaction {
   name: string;
   value: string;
   date: string;
-  type: "INCOME" | "EXPENSE";
+  type?: "INCOME" | "EXPENSE";
   category?: {
     id: string;
     icon: string;
