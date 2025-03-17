@@ -13,6 +13,7 @@ import empty from "../../../../../assets/empty.svg";
 import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { FilterModal } from "./FilterModal";
 import { formateDate } from "../../../../../app/utils/formatDate";
+import { EditTransactionModal } from "../modals/EditTransactionModal";
 
 export function Transactions() {
   const { areValueVisibility } = useDashboard();
@@ -26,6 +27,10 @@ export function Transactions() {
     handleChangeFilter,
     filters,
     handleAplyFilters,
+    editTransactionModalOpen,
+    handleCloseEditTransactionModal,
+    handleOpenEditTransactionModal,
+    transactionBeingEdited,
   } = useTransactionsController();
 
   const hasTransactions = transactions.length > 0;
@@ -99,8 +104,20 @@ export function Transactions() {
             )}
             {hasTransactions && !isLoading && (
               <>
+                {transactionBeingEdited && (
+                  <EditTransactionModal
+                    open={editTransactionModalOpen}
+                    onClose={handleCloseEditTransactionModal}
+                    transaction={transactionBeingEdited}
+                  />
+                )}
+
                 {transactions.map((transaction) => (
                   <div
+                    role="button"
+                    onClick={() => {
+                      handleOpenEditTransactionModal(transaction);
+                    }}
                     className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
                     key={transaction.id}
                   >

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTransactions } from "../../../../../app/hooks/useTransactions";
 import { TransactionsFilterParam } from "../../../../../app/services/transactionsService/getAll";
+import { Transaction } from "../../../../../app/entities/Transaction";
 
 export function useTransactionsController() {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -9,8 +10,18 @@ export function useTransactionsController() {
     year: new Date().getFullYear(),
   });
 
+  const [editTransactionModalOpen, setEditTransactionModalOpen] =
+    useState(false);
+
+  const [transactionBeingEdited, setTransactionBeingEdit] =
+    useState<null | Transaction>(null);
+
   const { data, isFetching, isInitialLoading, refetch } =
     useTransactions(filters);
+
+  useEffect(() => {
+    refetch();
+  }, [filters, refetch]);
 
   function handleOpenFilterModal() {
     setIsFilterModalOpen(true);
@@ -20,9 +31,15 @@ export function useTransactionsController() {
     setIsFilterModalOpen(false);
   }
 
-  useEffect(() => {
-    refetch();
-  }, [filters, refetch]);
+  function handleCloseEditTransactionModal() {
+    setTransactionBeingEdit(null);
+    setEditTransactionModalOpen(false);
+  }
+
+  function handleOpenEditTransactionModal(transaction: Transaction) {
+    setTransactionBeingEdit(transaction);
+    setEditTransactionModalOpen(true);
+  }
 
   function handleChangeFilter<TFilter extends keyof TransactionsFilterParam>(
     filter: TFilter
@@ -56,5 +73,9 @@ export function useTransactionsController() {
     handleChangeFilter,
     filters,
     handleAplyFilters,
+    handleOpenEditTransactionModal,
+    handleCloseEditTransactionModal,
+    editTransactionModalOpen,
+    transactionBeingEdited,
   };
 }
