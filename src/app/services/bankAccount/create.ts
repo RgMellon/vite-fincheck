@@ -3,7 +3,7 @@ import { httpClient } from "../httpClient";
 type BankAccountParams = {
   name: string;
   initialBalance: number;
-  type: "CHECKING" | "INVESTMENT" | "CASH";
+  type: "CHECKING" | "INVESTIMENT" | "CASH";
   color: string;
 };
 

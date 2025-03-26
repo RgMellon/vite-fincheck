@@ -10,7 +10,7 @@ import { currencyStringToNumber } from "../../../../../../app/utils/currencyStri
 const schema = z.object({
   initialBalance: z.string().nonempty("Saldo inicial é obrigatório"),
   name: z.string().nonempty("Nome obrigatório"),
-  type: z.enum(["CASH", "CHECKING", "INVESTMENT"]),
+  type: z.enum(["CASH", "CHECKING", "INVESTIMENT"]),
   color: z.string().nonempty("Cor é obrigatória"),
 });
 

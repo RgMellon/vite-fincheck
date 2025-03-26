@@ -3,7 +3,7 @@ export interface BankAccount {
   userId: string;
   name: string;
   initialBalance: string;
-  type: "INVESTMENT" | "CHECKING" | "CASH";
+  type: "INVESTIMENT" | "CHECKING" | "CASH";
   color: string;
   currentBalance: number;
 }

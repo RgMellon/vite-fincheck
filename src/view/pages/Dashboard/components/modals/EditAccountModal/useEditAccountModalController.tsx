@@ -14,7 +14,7 @@ const schema = z.object({
     z.number(),
   ]),
   name: z.string().nonempty("Nome obrigatório"),
-  type: z.enum(["CASH", "CHECKING", "INVESTMENT"]),
+  type: z.enum(["CASH", "CHECKING", "INVESTIMENT"]),
   color: z.string().nonempty("Cor é obrigatória"),
 });
 

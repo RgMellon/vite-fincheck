@@ -4,7 +4,7 @@ type UpdateBankAccountParams = {
   name: string;
   id: string;
   initialBalance: number;
-  type: "CHECKING" | "INVESTMENT" | "CASH";
+  type: "CHECKING" | "INVESTIMENT" | "CASH";
   color: string;
 };
 

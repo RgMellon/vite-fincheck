@@ -92,7 +92,7 @@ export function EditAccountModal() {
                   error={errors.type?.message}
                   placeholder="Tipo"
                   options={[
-                    { label: "Investimentos", value: "INVESTMENT" },
+                    { label: "Investimentos", value: "INVESTIMENT" },
                     { label: "Dinheiro", value: "CASH" },
                     { label: "Conta corrente", value: "CHECKING" },
                   ]}
